@@ -1,12 +1,14 @@
 const { port } = require('./config/config')
 const app = require('./app');
-const connectDB = require('./config/db');
+const db = require('./config/db');
 
-connectDB().then(() => {
-    const PORT = process.env.PORT || 5000;
-    app.listen(PORT, () => {
-      console.log(`Server is running on port ${PORT}`);
-    });
-  });
-
-
+db.connect((error)=>{
+    if(error){
+        console.error("error connecting to the database", error.message);
+    }else{
+        console.log("db connection successful");
+        app.listen(port, ()=>{
+            console.log("server listening on", process.env.PORT);
+        })
+    }
+});
