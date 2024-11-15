@@ -53,7 +53,7 @@ const getDistrictById = async (req, res) =>{
     }
 }
 
-//get the province of a district
+//get the province of a district --optionally get all associated districts with ?getAll=true
 const getProvinceOfDistrict = async (req, res) => {
     const district_id = req.params.id;
     const isGetAll = req.query.getAll === "true";
@@ -86,6 +86,7 @@ const getProvinceOfDistrict = async (req, res) => {
                     msg: `Found province and its associated districts`,
                     data: {
                         province: province[0],
+                        district_count: allDistrictsOfProvince.length,
                         districts: allDistrictsOfProvince
                     }
                 });

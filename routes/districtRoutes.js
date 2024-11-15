@@ -11,7 +11,7 @@ districtRouter.get('/:id', districtController.getDistrictById)
 //search districts
 districtRouter.get('/search', districtController.searchDistricts);
 
-//get the province of a district
+//get the province of a district --optionally get all associated districts with ?getAll=true
 districtRouter.get('/:id/province', districtController.getProvinceOfDistrict);
 
 module.exports = districtRouter;
