@@ -1,0 +1,71 @@
+const provinceModel = require('../models/province');
+
+// Get all districts
+const getAllProvinces = async (req, res) => {
+    try {
+        const AllProvinces = await provinceModel.getAllProvinces();
+
+        if (AllProvinces && AllProvinces.length > 0) {
+            res.status(200).json({
+                message: `Found ${AllProvinces.length} districts`,
+                data: AllProvinces
+            });
+        } else {
+            return res.status(404).json({
+                message: "No provinces found"
+            });
+        }
+    } catch (err) {
+        console.error("Error fetching provinces:", err);  // dev-log
+        return res.status(500).json({
+            message: "An error occurred while fetching provinces",
+            error: err.message || err
+        });
+    }
+};
+
+//get province by id
+const getProvinceById = async (req, res) =>{
+    const id = req.params.id;
+    const isGetAll = req.query.getAll === "true";
+
+    try{
+        const province = await provinceModel.getProvinceById(id);
+
+        if(province && province.length > 0){
+            if (isGetAll) {
+                const allDistrictsOfProvince = await provinceModel.getDistrictsOfProvince(id);
+
+                // Only respond once, after logic is done
+                return res.status(200).json({
+                    msg: `Found province and its associated districts`,
+                    data: {
+                        province: province[0],
+                        districts: allDistrictsOfProvince
+                    }
+                });
+            } else {
+                return res.status(200).json({
+                    msg: `found province`,
+                    data: province[0]
+                });
+            }
+        }else{
+            return res.status(404)
+            .json({
+                msg: "no such province exists",
+            })
+        }
+    }catch(err){
+        return res.status(500)
+        .json({
+            msg : "there was an error processing your request",
+            error : err.message
+        })
+    }
+}
+
+module.exports = {
+                    getAllProvinces,
+                    getProvinceById
+                };

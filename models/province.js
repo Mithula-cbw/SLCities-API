@@ -1,6 +1,14 @@
 const db = require('../config/db');
 
 //get all provinces
+const getAllProvinces = ()=>{
+    return new Promise((resolve,reject)=>{
+        db.query('SELECT * from provinces' , (error, result)=>{
+            if(error) return reject(error);
+            resolve(result);
+        })
+    });
+}
 
 //get province by ID
 const getProvinceById = (id) => {
@@ -25,6 +33,7 @@ const getDistrictsOfProvince = (id) => {
 
 
 module.exports = {
+                    getAllProvinces,
                     getProvinceById,
                     getDistrictsOfProvince
                 }

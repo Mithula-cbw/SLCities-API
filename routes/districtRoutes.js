@@ -3,7 +3,7 @@ const districtRouter = express.Router();
 const districtController = require('../controllers/districtController');
 
 //get all districts
-districtRouter.get('/all', districtController.getAllDistricts);
+districtRouter.get('/', districtController.getAllDistricts);
 
 //get district by id
 districtRouter.get('/:id', districtController.getDistrictById)

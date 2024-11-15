@@ -6,6 +6,7 @@ const helperMiddleware = require('./middleware/helper');
 
 //import routers
 const districtRouter = require('./routes/districtRoutes');
+const provinceRouter = require('./routes/provinceRoutes');
 
 //use middlewares
 //global middlewares
@@ -14,6 +15,7 @@ app.use('/', helperMiddleware.printReq);
 
 //routes
 app.use('/districts/', districtRouter);
+app.use('/provinces/', provinceRouter);
 
 
 // Global error handling middleware
