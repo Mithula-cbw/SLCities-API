@@ -1,6 +1,6 @@
 const provinceModel = require('../models/province');
 
-// Get all districts
+// Get All districts
 const getAllProvinces = async (req, res) => {
     try {
         const AllProvinces = await provinceModel.getAllProvinces();
@@ -24,7 +24,7 @@ const getAllProvinces = async (req, res) => {
     }
 };
 
-//get province by id
+//get Province by id
 const getProvinceById = async (req, res) =>{
     const id = req.params.id;
     const isGetAll = req.query.getAll === "true";
@@ -41,6 +41,7 @@ const getProvinceById = async (req, res) =>{
                     msg: `Found province and its associated districts`,
                     data: {
                         province: province[0],
+                        district_count: allDistrictsOfProvince.length,
                         districts: allDistrictsOfProvince
                     }
                 });
@@ -61,11 +62,11 @@ const getProvinceById = async (req, res) =>{
         .json({
             msg : "there was an error processing your request",
             error : err.message
-        })
+        });
     }
 }
 
-//get districts of a province
+//get Districts of a province
 const getDistrictsOfProvince = async (req, res) =>{
     const id = req.params.id;
 
@@ -93,8 +94,37 @@ const getDistrictsOfProvince = async (req, res) =>{
     }
 }
 
+//get District Count Of a Province
+const getDistrictCountByProvince = async(req, res) =>{
+    const id = req.params.id;
+
+    try{
+        const count = await provinceModel.getDistrictCountByProvince(id);
+
+        if(count && count > 0){
+            res.status(200)
+            .json({
+                msg: `There are ${count} Districts in this province`,
+                count: count
+            });
+        }else{
+            return res.status(404)
+            .json({
+                msg: `No Districts found for this province`
+            });
+        }
+    }catch(err){
+        return res.status(500)
+        .json({
+            msg : "there was an error processing your request",
+            error : err.message
+        });
+    }
+}
+
 module.exports = {
                     getAllProvinces,
                     getProvinceById,
-                    getDistrictsOfProvince
+                    getDistrictsOfProvince,
+                    getDistrictCountByProvince
                 };

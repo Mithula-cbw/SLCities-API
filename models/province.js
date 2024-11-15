@@ -30,10 +30,22 @@ const getDistrictsOfProvince = (id) => {
     });
 }
 
+//get District Count Of a Province
+const getDistrictCountByProvince = async (id) => {
+    return new Promise((resolve, reject) => {
+        const query = 'SELECT COUNT(*) AS count FROM districts WHERE province_id = ?';
+        
+        db.query(query, [id], (error, results) => {
+            if (error) return reject(error); 
+            resolve(results[0].count); // Resolve with the count from the query result
+        });
+    });
+};
 
 
 module.exports = {
                     getAllProvinces,
                     getProvinceById,
-                    getDistrictsOfProvince
+                    getDistrictsOfProvince,
+                    getDistrictCountByProvince
                 }

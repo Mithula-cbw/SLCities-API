@@ -9,6 +9,10 @@ provinceRouter.get('/', provinceController.getAllProvinces);
 provinceRouter.get('/:id', provinceController.getProvinceById);
 
 //get all associated districts of a province
-provinceRouter.get('/:id/districts', provinceController.getDistrictsOfProvince)
+provinceRouter.get('/:id/districts', provinceController.getDistrictsOfProvince);
+
+//get District Count Of a Province
+provinceRouter.get('/:id/district-count', provinceController.getDistrictCountByProvince);
+
 
 module.exports = provinceRouter;
