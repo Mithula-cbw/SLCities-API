@@ -12,6 +12,19 @@ const getProvinceById = (id) => {
     });
 }
 
+//get all districts of a province (by province id)
+const getDistrictsOfProvince = (id) => {
+    return new Promise((resolve, reject)=>{
+        db.query('SELECT * FROM districts WHERE province_id = ?', [id], (error, results)=>{
+            if(error) return reject(error);
+            resolve(results);
+        })
+    });
+}
+
+
+
 module.exports = {
-                    getProvinceById
+                    getProvinceById,
+                    getDistrictsOfProvince
                 }

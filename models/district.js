@@ -22,7 +22,6 @@ const getDistrictById = (id) => {
     });
 };
 
-
 //get district by first letters (limit 10)
 const searchDistricts = (searchString) => {
     return new Promise((resolve, reject) => {
