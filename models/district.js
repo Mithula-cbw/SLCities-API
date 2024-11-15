@@ -39,8 +39,20 @@ const searchDistricts = (searchString) => {
     });
 };
 
+//get all districts of a province (by province id)
+const getCitiesOfDistrict = (id) => {
+    return new Promise((resolve, reject)=>{
+        db.query('SELECT * FROM cities WHERE district_id = ?', [id], (error, results)=>{
+            if(error) return reject(error);
+            resolve(results);
+        })
+    });
+}
+
+
 module.exports = {
                     getAllDistricts,
                     getDistrictById,
-                    searchDistricts
+                    searchDistricts,
+                    getCitiesOfDistrict
                 }

@@ -147,7 +147,7 @@ const searchDistricts = async (req, res) => {
 
         // If no matches found, respond with fuzzy suggestion
         res.status(404).json({
-            message: 'No districts found matching your query. Is this what you mean?',
+            message: `No match found for '${searchString}'. Did you mean one of these?`,
             suggestion: suggestion || []
         });
 
