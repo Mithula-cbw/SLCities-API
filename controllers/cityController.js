@@ -156,9 +156,12 @@ const searchCities = async (req, res) => {
     }
 };
 
-// Create a city
+
+// Create a city -- optional near cities inside a radius ?r=#
 const createCity = async (req, res) => {
     const { city } = req.body;
+    const getNear = req.query.near === 'true'; 
+    const radius = req.query.r || 30;  
 
     if (!city) {
         return res.status(400).json({
@@ -170,10 +173,23 @@ const createCity = async (req, res) => {
         const newCity = await cityModel.createCity(city);
 
         if (newCity) {
-            res.status(200).json({
-                msg: newCity.message,
-                data: newCity.cityId,
-            });
+            // If near cities are requested, get them
+            if (getNear) {
+                const nearCities = await getNearCities(newCity.cityId, radius);
+
+                res.status(200).json({
+                    msg: `City created successfully, Near cities:`,
+                    data: {
+                        city: newCity.cityId,
+                        near_cities: nearCities
+                    }
+                });
+            } else {
+                res.status(200).json({
+                    msg: "City created successfully",
+                    data: newCity.cityId,
+                });
+            }
         } else {
             res.status(400).json({
                 msg: "Failed to create city",
@@ -187,7 +203,6 @@ const createCity = async (req, res) => {
         });
     }
 };
-
 // Helper functions
 // Fuzzy search for finding similar names
 const fuzzySearchForCities = async (searchString, limit) => {
@@ -213,6 +228,15 @@ const fuzzySearchForCities = async (searchString, limit) => {
         throw err;
     }
 };
+
+// Get nearby cities -- optional radius ?r=#
+const getNearCities = async (cityId, radius = 30) => {
+    return {
+        msg: `Nearby cities of cityId: ${cityId} within ${radius} km`, //dev-future
+        radius: radius
+    };
+};
+
 
 module.exports = {
     getAllCities,
