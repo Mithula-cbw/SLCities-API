@@ -156,6 +156,38 @@ const searchCities = async (req, res) => {
     }
 };
 
+// Create a city
+const createCity = async (req, res) => {
+    const { city } = req.body;
+
+    if (!city) {
+        return res.status(400).json({
+            msg: "City data is required",
+        });
+    }
+
+    try {
+        const newCity = await cityModel.createCity(city);
+
+        if (newCity) {
+            res.status(200).json({
+                msg: newCity.message,
+                data: newCity.cityId,
+            });
+        } else {
+            res.status(400).json({
+                msg: "Failed to create city",
+            });
+        }
+    } catch (err) {
+        console.error("Error creating city:", err);
+        res.status(500).json({
+            msg: "An error occurred while creating the city",
+            error: err.message,
+        });
+    }
+};
+
 // Helper functions
 // Fuzzy search for finding similar names
 const fuzzySearchForCities = async (searchString, limit) => {
@@ -186,5 +218,6 @@ module.exports = {
     getAllCities,
     getCityById,
     getDistrictOfCity,
-    searchCities
+    searchCities,
+    createCity
 };

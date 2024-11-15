@@ -45,10 +45,36 @@ const searchCities = (searchString) => {
     });
 };
 
+// Create a city
+const createCity = (city) => {
+    return new Promise((resolve, reject) => {
+        const {
+            district_id = null, // Optional field, default to null
+            name = null,        // Optional field, default to null
+            name_si = null,     // Optional field, default to null
+            name_ta = null,     // Optional field, default to null
+            postcode = null,    // Optional field, default to null
+            latitude = null,    // Optional field, default to null
+            longitude = null    // Optional field, default to null
+        } = city;
+
+        const query = `
+            INSERT INTO cities 
+            (district_id, name, name_si, name_ta, postcode, latitude, longitude) 
+            VALUES (?, ?, ?, ?, ?, ?, ?)
+        `;
+
+        db.query(query, [district_id, name, name_si, name_ta, postcode, latitude, longitude], (error, result) => {
+            if (error) return reject(error);
+            resolve({ message: 'City created successfully!', cityId: result.insertId });
+        });
+    });
+};
 
 
 module.exports = {
                     getAllCities,
                     getCityById,
-                    searchCities
+                    searchCities,
+                    createCity
                 };   

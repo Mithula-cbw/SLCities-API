@@ -14,4 +14,6 @@ cityRouter.get('/:id', cityController.getCityById);
 // Get the district of a city -- optionally get all associated cities with ?getAll=true
 cityRouter.get('/:id/district', cityController.getDistrictOfCity);
 
+cityRouter.post('/', cityController.createCity);
+
 module.exports = cityRouter;
