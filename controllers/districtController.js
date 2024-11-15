@@ -1,9 +1,10 @@
-const districts = require('../models/district');
+const districtModel = require('../models/district');
+const provinceModel = require('../models/province');
 
 // Get all districts
 const getAllDistricts = async (req, res) => {
     try {
-        const allDistricts = await districts.getAllDistricts();
+        const allDistricts = await districtModel.getAllDistricts();
 
         if (allDistricts.length > 0) {
             res.status(200).json({
@@ -24,6 +25,80 @@ const getAllDistricts = async (req, res) => {
     }
 };
 
+//get district by id
+const getDistrictById = async (req, res) =>{
+    const id = req.params.id;
+
+    try{
+        const district = await districtModel.getDistrictById(id);
+
+        if(district && district.length > 0){
+            res.status(200)
+            .json({
+                msg:"district found",
+                data: district[0]
+            })
+        }else{
+            res.status(404)
+            .json({
+                msg: "no such district exists",
+            })
+        }
+    }catch(err){
+        res.status(500)
+        .json({
+            msg : "there was an error processing your request",
+            error : err.message
+        })
+    }
+}
+
+//get the province of a district
+const getProvinceOfDistrict = async(req, res) =>{
+    const district_id = req.params.id;
+    try{
+    const district = await districtModel.getDistrictById(district_id);
+
+    if (!district || district.length === 0) {
+        return res.status(404).json({
+            msg: "District not found"
+        });
+    }
+
+    const province_id = district[0].province_id;
+
+    if (!province_id) {
+        return res.status(404).json({
+            msg: "District doesn't have a province associated"
+        });
+    }
+
+    console.log(district); //dev-log
+
+    const province = await provinceModel.getProvinceById(province_id);
+
+    if(province && province.length > 0){
+        res.status(200)
+        .json({
+            msg: `here is the province of ${district[0].name}`,
+            data: province[0]
+        })
+    }else{
+        res.status(404)
+        .json({
+            msg: "couldn't find province"
+        })
+    }
+    }catch(err){
+        res.status(500)
+        .json({
+            msg: "error processing your request",
+            error: err.message
+        })
+    }
+
+}
+
 //search district by string input
 const searchDistricts = async (req, res) => {
     const searchString = req.query.q;
@@ -41,8 +116,10 @@ const searchDistricts = async (req, res) => {
                 data: matches
             });
         } else {
+            //add a 'is this what you mean?' function //dev-future
             res.status(404).json({
-                message: 'No districts found matching your query'
+                message: 'No districts found matching your query',                
+                suggestion: "Is this what you mean?"
             });
         }
     } catch (err) {
@@ -54,5 +131,7 @@ const searchDistricts = async (req, res) => {
 
 module.exports = {
                      getAllDistricts,
+                     getDistrictById,
+                     getProvinceOfDistrict,
                      searchDistricts
                 };

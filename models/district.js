@@ -10,6 +10,18 @@ const getAllDistricts = ()=>{
     });
 }
 
+//get district by id
+const getDistrictById = (id) => {
+    const query = `SELECT * FROM districts WHERE id = ?`; // query
+    
+    return new Promise((resolve, reject) => {
+        db.query(query, [id], (error, result) => {
+            if (error) return reject(error);
+            resolve(result);
+        });
+    });
+};
+
 
 //get district by first letters (limit 10)
 const searchDistricts = (searchString) => {
@@ -31,5 +43,6 @@ const searchDistricts = (searchString) => {
 
 module.exports = {
                     getAllDistricts,
+                    getDistrictById,
                     searchDistricts
                 }
