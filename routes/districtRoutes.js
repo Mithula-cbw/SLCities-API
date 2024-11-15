@@ -5,4 +5,7 @@ const districtController = require('../controllers/districtController');
 //get all districts
 districtRouter.get('/all', districtController.getAllDistricts);
 
+//search districts
+districtRouter.get('/search', districtController.searchDistricts);
+
 module.exports = districtRouter;

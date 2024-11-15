@@ -24,6 +24,35 @@ const getAllDistricts = async (req, res) => {
     }
 };
 
-module.exports = {
-    getAllDistricts
+//search district by string input
+const searchDistricts = async (req, res) => {
+    const searchString = req.query.q;
+
+    if (!searchString) {
+        return res.status(400).json({ message: 'Search query is required' });
+    }
+
+    try {
+        const matches = await districts.searchDistricts(searchString);
+
+        if (matches.length > 0) {
+            res.status(200).json({
+                message: 'Here are the results we found for your query',
+                data: matches
+            });
+        } else {
+            res.status(404).json({
+                message: 'No districts found matching your query'
+            });
+        }
+    } catch (err) {
+        console.error(err); //dev-log
+        res.status(500).json({ message: 'An error occurred while processing your request' });
+    }
 };
+
+
+module.exports = {
+                     getAllDistricts,
+                     searchDistricts
+                };
