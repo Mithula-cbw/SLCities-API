@@ -115,29 +115,42 @@ const getProvinceOfDistrict = async (req, res) => {
     }
 };
 
-//search district by string input
+//search district by string input --optionally get close suggestions by ?fusy=true
 const searchDistricts = async (req, res) => {
     const searchString = req.query.q;
+    const isFusy = req.query.fusy === 'true';
 
     if (!searchString) {
         return res.status(400).json({ message: 'Search query is required' });
     }
 
     try {
+        // Fetch the exact matches from the database
         const matches = await districtModel.searchDistricts(searchString);
 
+        // If no matches are found, suggest fuzzy matches
+        const suggestion = matches.length > 0 || !isFusy 
+            ? null 
+            : await fuzzySearchForDistricts(searchString, 1);
+
+        // Check if we found matches and respond accordingly
         if (matches.length > 0) {
-            res.status(200).json({
+            const responseData = { matches };
+            if (isFusy && suggestion) {
+                responseData.suggestion = suggestion[0];
+            }
+            return res.status(200).json({
                 message: 'Here are the results we found for your query',
-                data: matches
-            });
-        } else {
-            const suggestion = await fuzzySearchForDistricts(searchString, 1);
-            res.status(404).json({
-                message: 'No districts found matching your query, Is this what you mean?',                
-                suggestion: suggestion
+                data: responseData
             });
         }
+
+        // If no matches found, respond with fuzzy suggestion
+        res.status(404).json({
+            message: 'No districts found matching your query. Is this what you mean?',
+            suggestion: suggestion || []
+        });
+
     } catch (err) {
         console.error(err); //dev-log
         res.status(500).json({ message: 'An error occurred while processing your request' });
