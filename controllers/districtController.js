@@ -1,6 +1,11 @@
+//models
 const districtModel = require('../models/district');
 const provinceModel = require('../models/province');
 
+//utils
+const fuzzySearch = require('../utils/fusySearch')
+
+//controllers
 // Get all districts
 const getAllDistricts = async (req, res) => {
     try {
@@ -28,6 +33,7 @@ const getAllDistricts = async (req, res) => {
 //get district by id
 const getDistrictById = async (req, res) =>{
     const id = req.params.id;
+    console.log("i got called");
 
     try{
         const district = await districtModel.getDistrictById(id);
@@ -118,7 +124,7 @@ const searchDistricts = async (req, res) => {
     }
 
     try {
-        const matches = await districts.searchDistricts(searchString);
+        const matches = await districtModel.searchDistricts(searchString);
 
         if (matches.length > 0) {
             res.status(200).json({
@@ -126,10 +132,10 @@ const searchDistricts = async (req, res) => {
                 data: matches
             });
         } else {
-            //add a 'is this what you mean?' function //dev-future
+            const suggestion = await fuzzySearchForDistricts(searchString, 1);
             res.status(404).json({
-                message: 'No districts found matching your query',                
-                suggestion: "Is this what you mean?"
+                message: 'No districts found matching your query, Is this what you mean?',                
+                suggestion: suggestion
             });
         }
     } catch (err) {
@@ -138,6 +144,31 @@ const searchDistricts = async (req, res) => {
     }
 };
 
+//helper functions
+//fusy search for finding similar names
+const fuzzySearchForDistricts = async (searchString, limit) => {
+    try {
+        // Fetch all districts from the model
+        const allDistricts = await districtModel.getAllDistricts();
+
+        if (allDistricts && allDistricts.length > 0) {
+
+            const fusyMatches = fuzzySearch(allDistricts, searchString);
+
+            if (fusyMatches && fusyMatches.length > 0) {
+                // Limit the results to the specified limit
+                return fusyMatches.slice(0, limit);
+            } else {
+                return []; 
+            }
+        } else {
+            return []; 
+        }
+    } catch (err) {
+        console.log("Error during fuzzy search:", err.message); //dev-log
+        throw err;
+    }
+};
 
 module.exports = {
                      getAllDistricts,
