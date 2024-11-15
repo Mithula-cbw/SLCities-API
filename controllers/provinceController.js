@@ -65,7 +65,36 @@ const getProvinceById = async (req, res) =>{
     }
 }
 
+//get districts of a province
+const getDistrictsOfProvince = async (req, res) =>{
+    const id = req.params.id;
+
+    try{
+        const districts = await provinceModel.getDistrictsOfProvince(id);
+
+        if(districts && districts.length > 0){
+            res.status(200)
+            .json({
+                msg: 'Districts of the province',
+                data: districts
+            })
+        }else{
+            return res.status(404)
+            .json({
+                msg: 'no districts found for query'
+            })
+        }
+    }catch(err){
+        return res.status(500)
+        .json({
+            msg: 'error processing your request',
+            error: err.message
+        })
+    }
+}
+
 module.exports = {
                     getAllProvinces,
-                    getProvinceById
+                    getProvinceById,
+                    getDistrictsOfProvince
                 };
