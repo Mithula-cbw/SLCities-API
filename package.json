@@ -1,5 +1,5 @@
 {
-  "name": "slcity-api",
+  "name": "slcities-api",
   "version": "1.0.0",
   "description": "An API for getting cities in sri lanka and get nearby cities",
   "main": "server.js",
@@ -13,7 +13,6 @@
   "dependencies": {
     "dotenv": "^16.4.5",
     "express": "^4.21.1",
-    "mongoose": "^8.8.1",
     "mysql2": "^3.11.4"
   },
   "devDependencies": {

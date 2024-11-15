@@ -1,13 +1,22 @@
 const express = require('express');
 const app = express();
-const { printReq } = require('./middleware/helper');
 
+//import middlewares
+const helperMiddleware = require('./middleware/helper');
+
+//import routers
+const districtRouter = require('./routes/districtRoutes');
+
+//use middlewares
 //global middlewares
-app.use('/',printReq);
+app.use(express.json()); 
+app.use('/', helperMiddleware.printReq);
+
+//routes
+app.use('/districts/', districtRouter);
 
 
-app.get('/', (req,res)=>{
-    res.send("i am listening");
-})
+// Global error handling middleware
+app.use(helperMiddleware.globalErrorHandler);
 
 module.exports = app;

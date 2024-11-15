@@ -1,9 +1,15 @@
-const mongoose = require('mongoose');
+const db = require('../config/db');
 
-const districtSchema = new mongoose.Schema({
-    district_name: { type: String, required: true },
-    maincity: { type: mongoose.Schema.Types.ObjectId, ref: 'City', required: false }  // References the 'City' model
-});
+//get all districts
+const getAllDistricts = ()=>{
+    return new Promise((resolve,reject)=>{
+        db.query('SELECT * from districts' , (error, result)=>{
+            if(error) return reject(error);
+            resolve(result);
+        })
+    });
+}
 
-// Export the District model
-module.exports = mongoose.model('District', districtSchema);
+module.exports = {
+                    getAllDistricts
+                }
