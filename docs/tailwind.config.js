@@ -9,7 +9,13 @@ export default {
   			md: 'calc(var(--radius) - 2px)',
   			sm: 'calc(var(--radius) - 4px)'
   		},
+      fontFamily:{
+        poppins: ['poppins', 'sans-serif']
+      },
   		colors: {
+        'future-900': '#15DCD6',
+        'future-600': '#15DCD699',
+        'future-300': '#15DCD666',
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
   			card: {
