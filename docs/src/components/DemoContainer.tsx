@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import CitySearch from "./CitySearch";
-import Code from "./Code";
 
 const DemoContainer: React.FC = () => {
   const [query, setQuery] = useState('');
