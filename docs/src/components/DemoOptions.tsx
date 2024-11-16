@@ -16,7 +16,7 @@ const DemoOptions: React.FC<CodeProps> = ({ fetchRequest}) => {
   };
 
   return (
-         <div className="w-full sm:mx-4">
+         <div className="sm:w-[500px] sm:mx-4">
             <Button
               onClick={toggleCodeVisibility}
               className={`bg-black hover:bg-black text-xs flex items-center gap-2 px-4 py-2 rounded-md ${
@@ -31,16 +31,16 @@ const DemoOptions: React.FC<CodeProps> = ({ fetchRequest}) => {
            {isOpen && 
            <Tabs defaultValue="account" className="w-full">
             <TabsList>
-              <TabsTrigger value="account">Account</TabsTrigger>
-              <TabsTrigger value="password">Password</TabsTrigger>
+              <TabsTrigger value="request">request</TabsTrigger>
+              <TabsTrigger value="response">response</TabsTrigger>
             </TabsList>
-            <TabsContent value="account">
-                <pre className="w-full mt-2 p-3 bg-gray-100 text-gray-800 rounded-md text-sm shadow-md overflow-auto">
-                    <code>{fetchRequest}</code>
-                </pre>
-            </TabsContent>
-            <TabsContent value="password">Change your password here.</TabsContent>
-            </Tabs>
+              <TabsContent value="request">
+                Change your password here.
+              </TabsContent>
+              <TabsContent value="response">
+              Change your password here.
+              </TabsContent>
+              </Tabs>
           }
          </div>
   );
