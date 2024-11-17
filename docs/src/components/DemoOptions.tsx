@@ -5,10 +5,10 @@ import { BsCodeSlash } from "react-icons/bs";
 
 
 interface CodeProps {
-  fetchRequest: string;
+  queryTemplate: string;
 }
 
-const DemoOptions: React.FC<CodeProps> = ({ fetchRequest}) => {
+const DemoOptions: React.FC<CodeProps> = ({ queryTemplate}) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleCodeVisibility = () => {

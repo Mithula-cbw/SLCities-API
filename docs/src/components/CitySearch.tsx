@@ -12,11 +12,10 @@ const CitySearch: React.FC<CitySearchProps> = ({ handleInput, query }) => {
         type="text"
         id="city-search"
         value={query}
-        onChange={handleInput}
+        onChange={handleInput} 
         placeholder="Type a city name..."
         className="p-2 border-future-600 dark:bg-gray-900 border rounded-md focus:outline-none focus:ring-2 focus:ring-future-600"
       />
-
     </div>
   );
 };
