@@ -1,18 +1,30 @@
 import React, { useState } from "react";
 import CitySearch from "./CitySearch";
-import { userInfo } from "os";
-import DropDown from "./DropDown";
 import DemoOptions from "./DemoOptions";
+import axios from "axios";
 
 const DemoContainer: React.FC = () => {
   const [query, setQuery] = useState('');
   const [suggestions, setSuggestions] = useState([]);
   const [ queryTemplate, setQueryTemplate] = useState('');
 
-  const queryTemplates = ["hello"];
+  const fetchCities = async () => {
+    try {
+      const response = await axios.get('/api/cities/', {
+        params: {
+          q: 'kurngala',
+          fusy: true,
+        },
+      });
+      console.log(response.data);
+    } catch (error) {
+      console.error('Error fetching cities:', error);
+    }
+  };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setQuery(e.target.value);
+    fetchCities();
   };
 
   return (
