@@ -29,13 +29,20 @@ const DemoOptions: React.FC<CodeProps> = ({ fetchRequest}) => {
             </Button>
            
            {isOpen && 
-           <Tabs defaultValue="account" className="w-full">
+           <Tabs defaultValue="request" className="w-full">
             <TabsList>
               <TabsTrigger value="request">request</TabsTrigger>
               <TabsTrigger value="response">response</TabsTrigger>
             </TabsList>
               <TabsContent value="request">
-                Change your password here.
+              <pre className="bg-gray-300 text-gray-900 px-4 pt-4 rounded-t-md overflow-x-auto">
+                <span contentEditable={false} className="text-green-700 text-xs block">//The fetch request of the search, try editing it!</span>
+                <span contentEditable={false} className="text-red-900">slcities/api/</span>
+              </pre>
+              <pre contentEditable className="bg-gray-300 text-gray-900 px-4 pt-2 pb-8 rounded-b-md overflow-x-auto outline-none">
+              <code className="font-mono">
+                </code>
+              </pre>
               </TabsContent>
               <TabsContent value="response">
               Change your password here.
