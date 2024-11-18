@@ -145,10 +145,13 @@ const searchCities = async (req, res) => {
         }
 
         // If no matches found, respond with fuzzy suggestion
-        res.status(404).json({
+        res.status(200).json({
             message: `No match found for '${searchString}'. Did you mean one of these?`,
-            suggestion: suggestion || []
+            data: {
+                suggestion: suggestion || []
+            }
         });
+        
 
     } catch (err) {
         console.error(err); //dev-log

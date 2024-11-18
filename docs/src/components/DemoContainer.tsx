@@ -14,7 +14,7 @@ const DemoContainer: React.FC = () => {
   const fetchCities = async () => {
     if (!query.trim()){
       setFullQuery(`${queryTemplate}`);
-      setResponse('');
+      setResponse('//response data will appear here..');
       return; // Don't make an API call if the query is empty
     }
     setIsLoading(true);
