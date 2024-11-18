@@ -21,7 +21,7 @@ export function AppSidebar() {
               to="/"
               className={({ isActive }) =>
                 `block py-2 px-4 text-sm font-medium  ${
-                  isActive ? "text-white border-r-2 border-white" : "text-gray-200 hover:bg-gray-700"
+                  isActive ? "text-white border-r-2 border-white" : "text-gray-400 hover:bg-gray-700"
                 }`
               }
             >
@@ -33,7 +33,7 @@ export function AppSidebar() {
               to="/about"
               className={({ isActive }) =>
                 `block py-2 px-4 text-sm font-medium  ${
-                  isActive ? "text-white border-r-2 border-white" : "text-gray-500 hover:bg-gray-800 hover:text-gray-400"
+                  isActive ? "text-white border-r-2 border-white" : "text-gray-400 hover:bg-gray-800 hover:text-gray-400"
                 }`
               }
             >
