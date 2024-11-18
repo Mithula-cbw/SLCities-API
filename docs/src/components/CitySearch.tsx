@@ -25,7 +25,7 @@ const CitySearch: React.FC<CitySearchProps> = ({ handleInput, query, suggestions
         {suggestions.length > 0 && 
           <ul className="suggestions z-40 bg-black absolute top-[100%] rounded-md mt-[1px] w-full">
           {suggestions.map((suggestion) => (
-            <li className="p-1 bg-gray-500" key={suggestion.id}>{suggestion.name}</li>
+            <li className="p-1 bg-gray-500 px-3 drop-shadow-sm" key={suggestion.id}>{suggestion.name}</li>
           ))}
         </ul>
         
