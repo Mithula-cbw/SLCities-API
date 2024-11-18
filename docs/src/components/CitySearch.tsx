@@ -22,15 +22,19 @@ const CitySearch: React.FC<CitySearchProps> = ({ handleInput, query, suggestions
         placeholder="Type a city name..."
         className="p-2 border-future-600 dark:bg-gray-900 border rounded-md focus:outline-none focus:ring-2 focus:ring-future-600"
       />
-        {suggestions.length > 0 && 
+        {suggestions.length > 0 ? (
           <ul className="suggestions z-40 bg-black absolute top-[100%] rounded-md mt-[1px] w-full">
           {suggestions.map((suggestion) => (
             <li className="p-1 bg-gray-500 px-3 drop-shadow-sm" key={suggestion.id}>{suggestion.name}</li>
           ))}
+          
         </ul>
+         ) : (
+          // !isLoading && query && <p>No matches found for "{query}"</p>
+          <></>
+        )}
         
-        
-        }
+
     </div>
   );
 };
