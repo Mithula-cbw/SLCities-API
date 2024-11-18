@@ -6,14 +6,16 @@ import { BsCodeSlash } from "react-icons/bs";
 
 interface CodeProps {
   queryTemplate: string;
+  response: string;
 }
 
-const DemoOptions: React.FC<CodeProps> = ({ queryTemplate}) => {
+const DemoOptions: React.FC<CodeProps> = ({ queryTemplate, response}) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleCodeVisibility = () => {
     setIsOpen((prevState) => !prevState);
   };
+
 
   return (
          <div className="sm:w-[500px] sm:mx-4">
@@ -36,16 +38,28 @@ const DemoOptions: React.FC<CodeProps> = ({ queryTemplate}) => {
             </TabsList>
               <TabsContent value="request">
               <pre className="bg-gray-300 text-gray-900 px-4 pt-4 rounded-t-md overflow-x-auto">
-                <span contentEditable={false} className="text-green-700 text-xs block">//The fetch request of the search, try editing it!</span>
-                <span contentEditable={false} className="text-red-900">slcities/api/</span>
+                <span contentEditable={false} className="text-green-900 text-xs block">//The fetch request of the search, try editing it!</span>
               </pre>
-              <pre contentEditable className="bg-gray-300 text-gray-900 px-4 pt-2 pb-8 rounded-b-md overflow-x-auto outline-none">
-              <code className="font-mono">
+              <pre className={`flex flex-col bg-gray-300 text-gray-900 px-4 pt-2 pb-2 rounded-b-md overflow-x-auto outline-none`}>
+              <div className="relative">
+                <code className={`font-mono block overflow-auto max-h-64 px-2 pb-8`}>
+                  <span contentEditable={false} className="text-red-900">
+                    slcities/api/
+                  </span>
+                  <span className="outline-none" aria-label="Editable section">
+                    {queryTemplate}
+                  </span>
                 </code>
+              </div>
+
               </pre>
               </TabsContent>
               <TabsContent value="response">
-              Change your password here.
+              <pre className="bg-gray-300 text-gray-900 px-4 pt-4 rounded-md overflow-x-auto pb-2">
+                <code className={`font-mono block overflow-auto text-sm max-h-64 px-2 pb-8`}>
+                  {response}
+                </code>
+              </pre>
               </TabsContent>
               </Tabs>
           }
