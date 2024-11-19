@@ -117,7 +117,10 @@ const getDistrictOfCity = async (req, res) => {
 // Search cities by string input -- optionally get close suggestions by ?fusy=true
 const searchCities = async (req, res) => {
     const searchString = req.query.q;
-    const isFusy = req.query.fusy === 'true';
+    
+    const isFusy = req.query.fusy !== undefined;
+    const fusy = isFusy ? parseInt(req.query.fusy, 2) : null;
+    
 
     if (!searchString) {
         return res.status(400).json({ message: 'Search query is required' });
@@ -130,13 +133,13 @@ const searchCities = async (req, res) => {
         // If no matches are found, suggest fuzzy matches
         const suggestion = matches.length > 0 || !isFusy
             ? null
-            : await fuzzySearchForCities(searchString, 1);
+            : await fuzzySearchForCities(searchString, fusy);
 
         // Check if we found matches and respond accordingly
         if (matches.length > 0) {
             const responseData = { matches };
             if (isFusy && suggestion) {
-                responseData.suggestion = suggestion[0];
+                responseData.suggestion = suggestion[fusy];
             }
             return res.status(200).json({
                 message: 'Here are the results we found for your query',

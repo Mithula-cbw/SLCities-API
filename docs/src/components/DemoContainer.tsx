@@ -13,9 +13,9 @@ const DemoContainer: React.FC = () => {
   const [query, setQuery] = useState<string>(''); 
   const [suggestions, setSuggestions] = useState<Suggestion[]>([]);
   const [error, setError] = useState<Error | null>(null);
-  const [queryTemplate, setQueryTemplate] = useState<string>('cities/search?fusy=true'); 
+  const [queryTemplate, setQueryTemplate] = useState<string>('cities/search?fusy=3'); 
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [fullQuery, setFullQuery] = useState<string>('cities/search?fusy=true');
+  const [fullQuery, setFullQuery] = useState<string>('cities/search?fusy=3');
   const [response, setResponse] = useState<string>('');
 
   const fetchCities = async () => {
