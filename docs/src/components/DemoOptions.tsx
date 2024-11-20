@@ -33,6 +33,10 @@ const DemoOptions: React.FC<CodeProps> = ({
     console.log("Saved query:", updatedQuery);
   };
 
+  const resetQuery = ()=>{
+    setQueryTemplate("cities/search?&limit=3fusy=3")
+  }
+
   return (
     <div className="w-full sm:w-[500px] sm:mx-4">
       <Button
@@ -79,6 +83,12 @@ const DemoOptions: React.FC<CodeProps> = ({
                     <DrawerCode queryTemplate={queryTemplate} onSave={handleSave} />
                   </DrawerContent>
                 </Drawer>
+                <Button
+                  className="text-xs py-0 sm:text-sm mx-2"
+                  disabled={queryTemplate === "cities/search?&limit=3fusy=3"}
+                  onClick={resetQuery}>
+                  reset
+                </Button>
               </div>
             </pre>
           </TabsContent>
