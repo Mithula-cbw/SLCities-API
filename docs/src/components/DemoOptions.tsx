@@ -11,10 +11,15 @@ interface CodeProps {
 
 const DemoOptions: React.FC<CodeProps> = ({ queryTemplate, response}) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [editableQuery, setEditableQuery] = useState(queryTemplate);
 
   const toggleCodeVisibility = () => {
     setIsOpen((prevState) => !prevState);
   };
+
+  const onEdit = () =>{
+    
+  }
 
 
   return (
@@ -50,6 +55,11 @@ const DemoOptions: React.FC<CodeProps> = ({ queryTemplate, response}) => {
                     {queryTemplate}
                   </span>
                 </code>
+                <div>
+                    <Button onClick={onEdit}>
+                      Edit
+                    </Button>
+                  </div>
               </div>
 
               </pre>

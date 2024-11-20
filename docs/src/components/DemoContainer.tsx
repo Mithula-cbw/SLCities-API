@@ -13,21 +13,18 @@ const DemoContainer: React.FC = () => {
   const [query, setQuery] = useState<string>(''); 
   const [suggestions, setSuggestions] = useState<Suggestion[]>([]);
   const [error, setError] = useState<Error | null>(null);
-  const [queryTemplate, setQueryTemplate] = useState<string>('cities/search?fusy=3'); 
+  const [queryTemplate, setQueryTemplate] = useState<string>('cities/search?&limit=3fusy=3'); 
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [fullQuery, setFullQuery] = useState<string>('cities/search?fusy=3');
   const [response, setResponse] = useState<string>('');
 
   const fetchCities = async () => {
     if (!query.trim()) {
-      setFullQuery(`${queryTemplate}`);
       setError(null);
       setResponse('//response data will appear here..');
       setSuggestions([]); // Clear suggestions if query is empty
       return;
     }
     setIsLoading(true);
-    setFullQuery(`${queryTemplate}&q=${query}`);
     try {
       const response = await axios.get(`/api/${queryTemplate}`, {
         params: { q: query },
@@ -75,7 +72,7 @@ const DemoContainer: React.FC = () => {
               {error.message || "An unexpected error occurred. Please try again."}
             </div>
           )}          
-        <DemoOptions queryTemplate={fullQuery} response={response} />
+        <DemoOptions queryTemplate={queryTemplate} response={response} />
       </div>
     </div>
   );
