@@ -13,7 +13,7 @@ const DrawerCode: React.FC<Props> = ({ queryTemplate, onSave }) => {
   };
 
   const handleSave = () => {
-    onSave(editableQuery); // Save the updated content
+    onSave(editableQuery);
   };
 
   return (

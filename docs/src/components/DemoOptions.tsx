@@ -30,7 +30,7 @@ const DemoOptions: React.FC<CodeProps> = ({
   // Handle saving the updated query template
   const handleSave = (updatedQuery: string) => {
     setQueryTemplate(updatedQuery);
-    console.log("Saved query:", updatedQuery);
+    // console.log("Saved query:", updatedQuery); //dev log
   };
 
   const resetQuery = ()=>{
@@ -93,7 +93,7 @@ const DemoOptions: React.FC<CodeProps> = ({
             </pre>
           </TabsContent>
           <TabsContent value="response">
-            <pre className="bg-gray-300 text-gray-900 px-4 pt-4 rounded-md overflow-x-auto pb-2">
+            <pre className="bg-gray-300 text-gray-900 pl-4 pr-1 pt-4 rounded-md overflow-x-auto pb-2">
               <code className="font-mono block overflow-auto text-xs md:text-sm max-h-64 px-2 pb-8">
                 {response}
               </code>
