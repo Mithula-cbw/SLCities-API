@@ -117,7 +117,8 @@ const getDistrictOfCity = async (req, res) => {
 // Search cities by string input -- optionally get close suggestions by ?fusy=true
 const searchCities = async (req, res) => {
     const searchString = req.query.q;
-    
+    const isLimit = req.query.limit !== undefined;
+    const limit = isLimit? parseInt(req.query.limit) : 5;    
     const isFusy = req.query.fusy !== undefined;
     const fusy = isFusy ? parseInt(req.query.fusy, 2) : null;
     
@@ -128,7 +129,7 @@ const searchCities = async (req, res) => {
 
     try {
         // Fetch the exact matches from the database
-        const matches = await cityModel.searchCities(searchString);
+        const matches = await cityModel.searchCities(searchString, limit);
 
         // If no matches are found, suggest fuzzy matches
         const suggestion = matches.length > 0 || !isFusy

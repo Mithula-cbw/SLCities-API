@@ -23,7 +23,7 @@ const getCityById = (id) => {
 };
 
 // Search cities (limit 10) --more specific query to sort for user friendly use
-const searchCities = (searchString) => {
+const searchCities = (searchString, limit) => {
     return new Promise((resolve, reject) => {
         const query = `
             SELECT id, name
@@ -36,9 +36,9 @@ const searchCities = (searchString) => {
                     WHEN name_si LIKE CONCAT(?, '%') THEN 1
                     ELSE 2  -- Fall back to those that contain the search string anywhere
                 END
-            LIMIT 10;
+            LIMIT ?;
         `;
-        db.query(query, [searchString, searchString, searchString, searchString], (error, result) => {
+        db.query(query, [searchString, searchString, searchString, searchString, limit], (error, result) => {
             if (error) reject(error);
             resolve(result);
         });
