@@ -72,7 +72,7 @@ const DemoContainer: React.FC = () => {
               {error.message || "An unexpected error occurred. Please try again."}
             </div>
           )}          
-        <DemoOptions queryTemplate={queryTemplate} response={response} />
+        <DemoOptions queryTemplate={queryTemplate} response={response} setQueryTemplate={setQueryTemplate}/>
       </div>
     </div>
   );
